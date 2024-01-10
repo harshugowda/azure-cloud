@@ -30,16 +30,13 @@ spec:
         env:
           - name: PETSTOREORDERSERVICE_SERVER_PORT
             value: "80"
-          # - name: spring.config.name
-          #   value: application_with_everything_enabled
-          # - name: APPLICATIONINSIGHTS_CONNECTION_STRING
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: aisecretkey
-          #       key: secret
-        env:
+          - name: spring.config.name
+            value: application_with_everything_enabled
           - name: PETSTORESERVICES_AI_INSTRUMENTATION_KEY
-            value: "98dc39f9-f212-4d02-90db-9fa5d2cc3168"
+            valueFrom:
+              secretKeyRef:
+                name: aisecretkey
+                key: secret
           - name: PETSTOREPRODUCTSERVICE_URL
             value: "http://aks-petstoreproductservice/"
           # - name: PETSTOREORDERSERVICE_EMAIL_TOPIC_CONNECTION_STRING
