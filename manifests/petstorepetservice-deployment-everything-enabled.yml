@@ -17,7 +17,7 @@ spec:
         agentpool: nodepool1
       containers:
       - name: petstoreservice
-        image: azurepetstorecontainerregistry.azurecr.io/petstorepetservice:latest
+        image: petstorecrs.azurecr.io/petstorepetservice:latest
         resources:
           requests:
             cpu: 250m
@@ -30,13 +30,13 @@ spec:
         env:
           - name: PETSTOREPETSERVICE_SERVER_PORT
             value: "80"
-          - name: spring.config.name
-            value: application_with_everything_enabled
-          - name: APPLICATIONINSIGHTS_CONNECTION_STRING
-            valueFrom:
-              secretKeyRef:
-                name: aisecretkey
-                key: secret
+          # - name: spring.config.name
+          #   value: application_with_everything_enabled
+          # - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: aisecretkey
+          #       key: secret
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
