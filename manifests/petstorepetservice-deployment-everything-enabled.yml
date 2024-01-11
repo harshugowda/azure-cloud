@@ -28,13 +28,13 @@ spec:
         ports:
         - containerPort: 8080
         env:
-          - name: PETSTOREPETSERVICE_SERVER_PORT
+            - name: PETSTOREPETSERVICE_SERVER_PORT
             value: "80"
-          - name: spring.config.name
+            - name: spring.config.name
             value: application_with_everything_enabled
-          - name: PETSTORESERVICES_AI_INSTRUMENTATION_KEY
+            - name: PETSTORESERVICES_AI_INSTRUMENTATION_KEY
             valueFrom:
-              secretKeyRef:
+                secretKeyRef:
                 name: aisecretkey
                 key: secret
 ---
