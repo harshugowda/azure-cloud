@@ -38,7 +38,7 @@ spec:
           #       name: aisecretkey
           #       key: secret
           - name: PETSTORESERVICES_AI_INSTRUMENTATION_KEY
-            value: "98dc39f9-f212-4d02-90db-9fa5d2cc3168"
+            value: "5dfd60b1-fbc4-4f84-bdcf-61cf393b3dbb"
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
