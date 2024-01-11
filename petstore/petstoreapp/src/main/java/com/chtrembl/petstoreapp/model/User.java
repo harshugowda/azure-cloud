@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
-
+import com.microsoft.applicationinsights.telemetry.PageViewTelemetry;
 import com.microsoft.applicationinsights.TelemetryClient;
 
 /**
@@ -32,7 +32,12 @@ public class User implements Serializable {
 	// intentionally avoiding spring cache to ensure service calls are made each
 	// time to show Telemetry with APIM requests
 	private List<Pet> pets;
-
+	List<Pet> pets = this.webClient.get().uri("/v2/pet/findByStatus?status={status}", "available")
+				.header("session-id", this.sessionUser.getSessionId()).accept(MediaType.APPLICATION_JSON)
+				.header("Ocp-Apim-Subscription-Key", this.containerEnvironment.getPetStoreServiceSubscriptionKey())
+				.header("Ocp-Apim-Trace", "true").retrieve()
+				.bodyToMono(new ParameterizedTypeReference<List<Pet>>() {
+				}).block();
 	// intentionally avoiding spring cache to ensure service calls are made each
 	// time to show Telemetry with APIM requests
 	private List<Product> products;
@@ -56,6 +61,16 @@ public class User implements Serializable {
 	this.sessionUser.getTelemetryClient()
 		.trackEvent(String.format("PetStoreApp %s logged in, container host: %s",
 					  this.sessionUser.getName(), this.containerEnvironment.getContainerHostName()));
+	...
+	// Track a Page View
+	PageViewTelemetry pageViewTelemetry = new PageViewTelemetry();
+	pageViewTelemetry.setUrl(new URI(request.getRequestURL().toString()));
+	pageViewTelemetry.setName("Account Landing Page");
+	this.sessionUser.getTelemetryClient().trackPageView(pageViewTelemetry);
+	
+	...
+	// Track an Exception
+	this.sessionUser.getTelemetryClient().trackException(new NullPointerException("sample null pointer"));
 
 	@PostConstruct
 	private void initialize() {
