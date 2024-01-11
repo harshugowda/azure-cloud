@@ -47,6 +47,16 @@ public class User implements Serializable {
 
 	private boolean initialTelemetryRecorded = false;
 
+	@Autowired
+	private User sessionUser;
+	...
+	this.sessionUser.getTelemetryClient().getContext().getSession().setIsNewSession(true);
+	this.sessionUser.getTelemetryClient().getContext().getSession().setId(this.sessionUser.getSessionId());
+	// Track an Event
+	this.sessionUser.getTelemetryClient()
+		.trackEvent(String.format("PetStoreApp %s logged in, container host: %s",
+					  this.sessionUser.getName(), this.containerEnvironment.getContainerHostName()));
+
 	@PostConstruct
 	private void initialize() {
 		if (this.telemetryClient == null) {
