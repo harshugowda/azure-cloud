@@ -41,11 +41,11 @@ spec:
             value: "5dfd60b1-fbc4-4f84-bdcf-61cf393b3dbb"
           - name: PETSTOREPRODUCTSERVICE_URL
             value: "http://aks-petstoreproductservice/"
-          # - name: PETSTOREORDERSERVICE_EMAIL_TOPIC_CONNECTION_STRING
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: emailtopicconnstring
-          #       key: secret
+          - name: PETSTOREORDERSERVICE_EMAIL_TOPIC_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: emailtopicconnstring
+                key: secret
           # - name: PETSTOREORDERSERVICE_SUBSCRIPTION_ID
           #   valueFrom:
           #     secretKeyRef:
